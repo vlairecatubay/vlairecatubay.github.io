@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Valerie Catubay Portfolio</title>
+  <meta name="description" content="Portfolio: About Me, Skills, Industry Impact, Projects, Little Personal, Contact" />
+
+  <style>
+    /* ================= THEME VARIABLES ================= */
+    :root{
+      --primary:  #A3B18A; /* Sage */
+      --secondary:#E9B44C; /* Mustard */
+      --accent:   #588157; /* Deep Olive */
+      --neutral:  #FAF9F6; /* Warm White */
+
+      /* semantic roles (light defaults) */
+      --bg: #FAF9F6;        /* page background */
+      --surface: #FFFFFF;   /* cards */
+      --text: #17201f;      /* dark text */
+      --muted: #58605a;     /* muted */
+      --border: rgba(10,10,10,0.06);
+      --shadow: 0 12px 30px rgba(0,0,0,0.08);
+      --radius: 16px;
+      --maxw: 1120px;
+    }
+
+    /* Dark theme overrides — KEEP accents the same */
+    html[data-theme="dark"]{
+      --bg: #0b1113;        /* deep charcoalish */
+      --surface: #0f1614;   /* card surface */
+      --text: #e9f1ee;      /* light text */
+      --muted: #9aa29e;
+      --border: rgba(255,255,255,0.04);
+      --shadow: 0 18px 40px rgba(0,0,0,0.6);
+    }
+
+    /* ============== RESET ============== */
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;background:var(--bg);color:var(--text);line-height:1.6}
+    img{max-width:100%;display:block}
+    a{color:inherit}
+    h1,h2,h3{margin:.25rem 0 .6rem;line-height:1.15}
+    p{margin:.2rem 0 1rem;color:var(--muted)}
+    .container{max-width:var(--maxw);margin:0 auto;padding:0 1rem}
+
+    /* ============== NAV ============== */
+    header.nav{position:sticky;top:0;z-index:70;background:linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.05));border-bottom:1px solid var(--border);backdrop-filter: blur(6px)}
+    .nav-inner{height:72px;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:.7rem}
+    .logo{width:40px;height:40px;border-radius:10px;background:conic-gradient(from 180deg at 50% 50%,var(--primary),var(--secondary),var(--accent));display:grid;place-items:center;color:var(--neutral);font-weight:800}
+    .brand .name{font-weight:800;color:var(--text)}
+    .nav-links{display:flex;gap:.6rem;align-items:center}
+    .nav-links a{padding:.45rem .7rem;border-radius:10px;color:var(--muted);font-weight:700}
+    .nav-links a:hover,.nav-links a[aria-current="page"]{background:rgba(88,129,87,0.12);color:var(--text)}
+    .menu-btn{display:none;border:1px solid var(--border);background:var(--surface);padding:.45rem .6rem;border-radius:10px}
+    .menu-panel{display:none;padding:.6rem;border-top:1px solid var(--border)}
+
+    /* ============== HERO ============== */
+    .hero{padding:84px 0 48px}
+    .hero-grid{display:grid;grid-template-columns:1.25fr .9fr;gap:1.6rem;align-items:center}
+    .kicker{color:var(--secondary);font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:.82rem}
+    .title{font-size:clamp(1.9rem,4vw,3rem);font-weight:900;color:var(--text)}
+    .title span{background:linear-gradient(90deg,var(--accent),var(--primary));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .lead{font-size:1.05rem}
+    .actions{display:flex;gap:.6rem;margin-top:1rem;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1rem;border-radius:12px;border:1px solid var(--border);background:var(--surface);font-weight:800;cursor:pointer;transition:transform .14s ease,box-shadow .18s ease}
+    .btn:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+    .btn.primary{background:linear-gradient(90deg,var(--primary),var(--secondary));border:none;color:#081008}
+    .btn.cta{background:linear-gradient(90deg,var(--accent),#ff8a00);border:none;color:#fff}
+
+    .hero-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1rem;box-shadow:var(--shadow)}
+    .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-top:.75rem}
+    .stat{padding:.7rem;border-radius:10px;background:var(--surface);border:1px solid var(--border);text-align:center}
+    .stat strong{display:block;font-size:1.05rem;color:var(--secondary)}
+
+    /* ============== SECTIONS ============== */
+    .section{padding:64px 0}
+    .section-header{margin-bottom:1rem}
+    .eyebrow{color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:.82rem}
+    .section h2{font-size:clamp(1.4rem,2.4vw,1.95rem)}
+
+    /* ============== ABOUT ============== */
+    .about{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem;box-shadow:var(--shadow)}
+    .profile{display:flex;gap:1rem;align-items:center}
+    .avatar{width:84px;height:84px;border-radius:50%;background:linear-gradient(135deg,var(--neutral),var(--surface));border:1px solid var(--border)}
+
+    /* ============== SKILLS ============== */
+    .chips{display:flex;flex-wrap:wrap;gap:.5rem}
+    .chip{padding:.45rem .65rem;border-radius:999px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-weight:700}
+
+    /* ============== IMPACT ============== */
+    .impact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    .impact{border-left:4px solid var(--accent);padding:.85rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:10px}
+    .impact small{color:var(--muted)}
+
+    /* ============== PROJECTS ============== */
+    .projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    .project{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;display:grid;grid-template-rows:auto 1fr auto;transition:transform .16s ease,box-shadow .18s ease}
+    .project:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+    .thumb{aspect-ratio:16/9;display:grid;place-items:center;background:linear-gradient(135deg,var(--neutral),var(--surface))}
+    .body{padding:1rem}
+    .tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.6rem}
+    .tag{font-size:.78rem;padding:.35rem .5rem;border-radius:999px;border:1px solid var(--border);color:var(--muted)}
+    .project .footer{display:flex;justify-content:space-between;align-items:center;padding:.8rem 1rem;border-top:1px solid var(--border)}
+
+    /* ============== PERSONAL ============== */
+    .personal-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .personal-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem}
+
+    /* ============== CONTACT ============== */
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .input{width:100%;padding:.9rem 1rem;border-radius:12px;border:1px solid var(--border);background:var(--neutral);color:var(--text);outline:none}
+    .input:focus{box-shadow:0 0 0 6px rgba(88,129,87,0.12);border-color:rgba(88,129,87,0.4)}
+    textarea.input{min-height:140px;resize:vertical}
+
+    /* ============== FOOTER ============== */
+    .footer{text-align:center;color:var(--muted);padding:40px 0}
+
+    /* ============== UTILITIES ============== */
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+    .spacer{height:20px}
+    [data-animate]{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+    [data-animate].in{opacity:1;transform:none}
+
+    /* ============== RESPONSIVE ============== */
+    @media (max-width:1000px){
+      .hero-grid{grid-template-columns:1fr}
+      .about{grid-template-columns:1fr}
+      .projects-grid{grid-template-columns:repeat(2,1fr)}
+      .impact-grid{grid-template-columns:repeat(2,1fr)}
+      .personal-grid{grid-template-columns:1fr}
+      .nav-links{display:none}
+      .menu-btn{display:inline-grid}
+      .menu-panel.open{display:block}
+    }
+    @media (max-width:640px){
+      .projects-grid{grid-template-columns:1fr}
+      .stat-grid{grid-template-columns:1fr 1fr}
+      .grid-2{grid-template-columns:1fr}
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      .btn,.project,[data-animate]{transition:none}
+    }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <header class="nav" role="banner">
+    <div class="container nav-inner">
+      <a class="brand" href="#home" aria-label="Go to top">
+        <div class="logo">VC</div>
+        <span class="name">About Me</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#impact">Industry Impact</a>
+        <a href="#projects">Projects</a>
+        <a href="#personal">Little Personal</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div style="display:flex;align-items:center;gap:.6rem">
+        <!-- Theme toggle keeps accents; defaults to dark because html[data-theme="dark"] is set above -->
+        <button class="btn" id="themeToggle" aria-pressed="true" title="Toggle light/dark">🌗</button>
+        <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuPanel" aria-label="Toggle menu">☰</button>
+      </div>
+    </div>
+
+    <div id="menuPanel" class="menu-panel container" role="region" aria-label="Mobile menu">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#impact">Industry Impact</a>
+      <a href="#projects">Projects</a>
+      <a href="#personal">Little Personal</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main id="home" class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="kicker" data-animate>Software Developer / Aspiring AI Engineer</div>
+        <h1 class="title" data-animate style="transition-delay:.04s">Hi — I’m <span>Valerie Catubay</span>.</h1>
+        <p class="lead" data-animate style="transition-delay:.08s">I help build applications as a job, but is also passionate about technology and love learning and trying new things.</p>
+
+        <div class="actions" data-animate style="transition-delay:.12s">
+          <a class="btn cta" href="#projects">See Projects</a>
+          <a class="btn" href="#contact">Contact</a>
+          <a class="btn primary" href="Valerie Catubay_CV_2025.pdf" download>Résumé</a>
+        </div>
+      </div>
+
+      <aside class="hero-card" aria-label="Highlights">
+        <h3 style="margin-top:0">Highlights</h3>
+        <div class="stat-grid">
+          <div class="stat" data-animate>
+            <strong>8+ yrs</strong>
+            <small class="muted">Experience</small>
+          </div>
+          <div class="stat" data-animate style="transition-delay:.05s">
+            <strong>30+</strong>
+            <small class="muted">Client Projects</small>
+          </div>
+          <div class="stat" data-animate style="transition-delay:.05s">
+            <strong>10+</strong>
+            <small class="muted">Personal Projects</small>
+          </div>
+          <div class="stat" data-animate style="transition-delay:.05s">
+            <strong>5+</strong>
+            <small class="muted">Personal AI Projects</small>
+          </div>
+          <div class="stat" data-animate style="transition-delay:.1s">
+            <strong>15+</strong>
+            <small class="muted">API Integrations</small>
+          </div>
+          <div class="stat" data-animate style="transition-delay:.1s">
+            <strong>15+</strong>
+            <small class="muted">Practiced Tech Stack</small>
+          </div>
+        </div>
+
+        <div class="spacer"></div>
+        <p class="muted">Open to freelance & full-time roles. Remote‑friendly.</p>
+      </aside>
+    </div>
+  </main>
+
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="container section-header">
+      <div class="eyebrow">About Me</div>
+      <h2>Discovering new technologies and helping create impactful projects is my drive.</h2>
+    </div>
+
+    <div class="container about">
+      <article class="card" data-animate>
+        <div class="profile">
+          <div class="avatar" aria-hidden="true"></div>
+          <div>
+            <h3 style="margin:.2rem 0 .3rem">Valerie Catubay</h3>
+            <small class="muted">Based in Philippines • Open to remote</small>
+          </div>
+        </div>
+
+        <p style="margin-top:1rem">I design and build reliable, fast web apps. I enjoy solving product problems, writing maintainable code, and shipping measurable outcomes.</p>
+        <p>Current interests: Helping companies' reduced project costs, anything about AI, complex problem solving algorithms</p>
+      </article>
+
+      <article class="card" data-animate style="transition-delay:.06s">
+        <h3 style="margin-top:0">What I value</h3>
+        <ul>
+          <li>Clarity over cleverness</li>
+          <li>Independency over micromanagement</li>
+          <li>Fast iteration with measurement</li>
+          <li>Automated tests & observability</li>
+          <li>Clear, kind communication</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- IMPACT -->
+  <section id="impact" class="section">
+    <div class="container section-header">
+      <div class="eyebrow">Industry Impact</div>
+      <h2>Everyone can be a developer, but dedication is needed if you want to make an impact.</h2>
+      <h3>These are some of the impacts I made on my previous projects that I am proud of.</h3>
+    </div>
+
+    <div class="container impact-grid">
+      <div class="impact" data-animate>
+        <h3 style="margin:.1rem 0 .2rem">Reduced Project Cost by 50%</h3>
+        <small>Led performance revamp for our AWS hosted applications and micro services that incurs almost $15k USD per month. After the performance revamp, 
+          the cost was reduced to $7k USD per month.</small>
+        </small>
+      </div>
+      <div class="impact" data-animate style="transition-delay:.05s">
+        <h3 style="margin:.1rem 0 .2rem">Support tickets −35%</h3>
+        <small>Introduced an AI chatbot that is trained to answer product specific questions that helps reduce support/inquiry tickets since users would be
+          able to get answers to their questions without having to wait for a support agent. A sample project is available on my Github's repository.</small>
+      </div>
+      <div class="impact" data-animate style="transition-delay:.1s">
+        <h3 style="margin:.1rem 0 .2rem">Testing Time −70%</h3>
+        <small>Led the team to integrate an automated tests for a data driven application. We have almost 500+ test cases that were automated using the tool.</small>
+      </div>
+       <div class="impact" data-animate style="transition-delay:.1s">
+        <h3 style="margin:.1rem 0 .2rem">API Documentation Time −70%</h3>
+        <small>Introduced using the Postman AI to generate documentation that can be easily published and deployed to the web for your complete
+          and interactive API documentation. This helps the team to focus on building the APIs rather than writing the documentation.</small>
+        </small>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="section">
+    <div class="container section-header">
+      <div class="eyebrow">Skills</div>
+      <h2>Tools & technologies I use</h2>
+    </div>
+
+    <div class="container" data-animate>
+      <div class="chips">
+        <span class="chip">Python</span>
+        <span class="chip">C#</span>
+        <span class="chip">Outsystems</span>
+        <span class="chip">HTML</span>
+        <span class="chip">CSS</span>
+        <span class="chip">JavaScript</span>
+        <span class="chip">TypeScript</span>
+        <span class="chip">React</span>
+        <span class="chip">Node.js</span>
+        <span class="chip">Express</span>
+        <span class="chip">PostgreSQL</span>
+        <span class="chip">Wordpress</span>
+        <span class="chip">MongoDB</span>
+        <span class="chip">Docker</span>
+        <span class="chip">Azure</span>
+        <span class="chip">Google Cloud</span>
+        <span class="chip">API Integrations</span>
+        <span class="chip">Data Structures</span>
+        <span class="chip">Qlik</span>
+        <span class="chip">Alteryx</span>
+        <span class="chip">Zoho</span>
+        <span class="chip">Tableu</span>
+        <span class="chip">AWS</span>
+        <span class="chip">Git</span>
+        <span class="chip">Firebase</span>
+        <span class="chip">Elastic Search</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="want-to-learn" class="section">
+    <div class="container section-header">
+      <div class="eyebrow">I Want To Learn</div>
+      <h2>Tools, frameworks & technologies I am currently learning</h2>
+    </div>
+
+    <div class="container" data-animate>
+      <div class="chips">
+        <span class="chip">Advance Python</span>
+        <span class="chip">Hugging Face</span>
+        <span class="chip">TensorFlow</span>
+        <span class="chip">PyTorch</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="section">
+    <div class="container section-header">
+      <div class="eyebrow">Projects</div>
+      <h2>Selected work</h2>
+    </div>
+
+    <div class="container projects-grid">
+      <!-- Project 1 -->
+      <article class="project" data-animate>
+        <div class="thumb" aria-hidden="true">
+          <img alt="Project One" src="echopath.png" />
+        </div>
+        <div class="body">
+          <h3>EchoPath</h3>
+          <p>A data driven B2B application that helps companies access their data subscriptions and help drive use of data for their business use.</p>
+          <div class="tags">
+            <span class="tag">React</span>
+            <span class="tag">C#</span>
+            <span class="tag">AWS</span>
+            <span class="tag">Elastic Search</span>
+          </div>
+        </div>
+        <div class="footer">
+          <a class="btn" href="https://www.echopath.co/">Live</a>
+        </div>
+      </article>
+
+      <!-- Project 2 -->
+      <article class="project" data-animate style="transition-delay:.05s">
+        <div class="thumb" aria-hidden="true">
+          <img alt="Project Two" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 360'><rect width='640' height='360' fill='%23FAF9F6'/><text x='40' y='70' font-family='Arial' font-size='28' fill='%23588157'>Project Two</text></svg>" />
+        </div>
+        <div class="body">
+          <h3>Realtime Chat</h3>
+          <p>WebSocket chat with optimistic UI and message retries.</p>
+          <div class="tags">
+            <span class="tag">React</span>
+            <span class="tag">WebSocket</span>
+            <span class="tag">Node</span>
+          </div>
+        </div>
+        <div class="footer">
+          <a class="btn" href="#">Live</a>
+          <a class="btn" href="#">Source</a>
+        </div>
+      </article>
+
+      <!-- Project 3 -->
+      <article class="project" data-animate style="transition-delay:.1s">
+        <div class="thumb" aria-hidden="true">
+          <img alt="Project Three" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 360'><rect width='640' height='360' fill='%23FAF9F6'/><text x='40' y='70' font-family='Arial' font-size='28' fill='%23588157'>Project Three</text></svg>" />
+        </div>
+        <div class="body">
+          <h3>Data Viz Dashboard</h3>
+          <p>Interactive dashboard with client-side search, filter, and sorting. Built for speed and accessibility.</p>
+          <div class="tags">
+            <span class="tag">TypeScript</span>
+            <span class="tag">Vite</span>
+            <span class="tag">Charting</span>
+          </div>
+        </div>
+        <div class="footer">
+          <a class="btn" href="#">Live</a>
+          <a class="btn" href="#">Source</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- PERSONAL -->
+  <section id="personal" class="section">
+    <div class="container section-header">
+      <div class="eyebrow">Little Personal</div>
+      <h2>What I do outside work</h2>
+    </div>
+
+    <div class="container personal-grid">
+      <div class="personal-item" data-animate>
+        <h3 style="margin-top:0">Cycling & Coffee</h3>
+        <p>Weekend cyclist, amateur barista, and occasional trail runner.</p>
+      </div>
+      <div class="personal-item" data-animate style="transition-delay:.05s">
+        <h3 style="margin-top:0">How I work</h3>
+        <p>Async-first communication, small PRs, strong test coverage, and regular demos.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section">
+    <div class="container section-header">
+      <div class="eyebrow">Contact</div>
+      <h2>Let’s build something meaningful</h2>
+    </div>
+
+    <div class="container card" data-animate>
+      <form id="contactForm" novalidate>
+        <div class="grid-2">
+          <label>
+            <span class="sr-only">Your name</span>
+            <input class="input" name="name" type="text" placeholder="Your name" required />
+          </label>
+          <label>
+            <span class="sr-only">Email</span>
+            <input class="input" name="email" type="email" placeholder="Email" required />
+          </label>
+        </div>
+        <div class="spacer"></div>
+        <label>
+          <span class="sr-only">Message</span>
+          <textarea class="input" name="message" placeholder="Tell me about your project" required></textarea>
+        </label>
+        <div class="spacer"></div>
+        <button class="btn cta" type="submit">Send Message</button>
+        <span id="formStatus" aria-live="polite" style="margin-left:.75rem;color:var(--muted)"></span>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      © <span id="year"></span> Your Name — Built with HTML • CSS • JS — Palette: Sage & Mustard
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Intersection-based reveal
+    const initReveal = () => {
+      const els = document.querySelectorAll('[data-animate]');
+      const io = new IntersectionObserver((entries) => {
+        for (const e of entries) if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      }, { threshold: 0.14 });
+      els.forEach(el => io.observe(el));
+    };
+
+    // Mobile menu toggle
+    const initMenu = () => {
+      const btn = document.getElementById('menuBtn');
+      const panel = document.getElementById('menuPanel');
+      if(!btn) return;
+      btn.addEventListener('click', () => {
+        const open = panel.classList.toggle('open');
+        btn.setAttribute('aria-expanded', String(open));
+      });
+      panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        panel.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      }));
+    };
+
+    // Theme toggle (defaults to dark) — preserves accents
+    const initTheme = () => {
+      const tBtn = document.getElementById('themeToggle');
+      const root = document.documentElement;
+      const saved = localStorage.getItem('portfolio-theme');
+
+      const setMode = (mode) => {
+        if(mode === 'light'){
+          root.removeAttribute('data-theme');
+          tBtn.setAttribute('aria-pressed','false');
+          tBtn.textContent = '🌗';
+        } else {
+          root.setAttribute('data-theme','dark');
+          tBtn.setAttribute('aria-pressed','true');
+          tBtn.textContent = '🌞';
+        }
+        localStorage.setItem('portfolio-theme', mode);
+      };
+
+      // initialize (default to dark if no saved preference)
+      setMode(saved === 'light' ? 'light' : 'dark');
+
+      tBtn.addEventListener('click', () => {
+        const isDark = root.getAttribute('data-theme') === 'dark';
+        setMode(isDark ? 'light' : 'dark');
+      });
+    };
+
+    // Contact form client validation (replace with real backend)
+    const initForm = () => {
+      const form = document.getElementById('contactForm');
+      const status = document.getElementById('formStatus');
+      if(!form) return;
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const fd = new FormData(form);
+        const name = fd.get('name')?.toString().trim();
+        const email = fd.get('email')?.toString().trim();
+        const message = fd.get('message')?.toString().trim();
+        if(!name||!email||!message){status.textContent='Please complete all fields.';return}
+        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){status.textContent='Please enter a valid email.';return}
+        status.textContent='Sending…';
+        setTimeout(()=>{status.textContent='Message sent! Thank you.';form.reset()},800);
+      });
+    };
+
+    // Scrollspy
+    const initScrollSpy = () => {
+      const links = Array.from(document.querySelectorAll('.nav-links a'));
+      const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+      if(!sections.length) return;
+      const spy = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const id = '#' + entry.target.id;
+          const link = links.find(l=>l.getAttribute('href')===id);
+          if(entry.isIntersecting){links.forEach(l=>l.removeAttribute('aria-current'));link?.setAttribute('aria-current','page')}
+        });
+      },{rootMargin:'-45% 0px -45% 0px',threshold:0});
+      sections.forEach(s=>spy.observe(s));
+    };
+
+    // Set footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Initialize all when DOM ready
+    window.addEventListener('DOMContentLoaded', () => {
+      initReveal();
+      initMenu();
+      initTheme();
+      initForm();
+      initScrollSpy();
+    });
+  </script>
+</body>
+</html>
